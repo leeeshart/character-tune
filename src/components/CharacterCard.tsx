@@ -59,14 +59,14 @@ const CharacterCard = ({ character, onClick, isSelected }: CharacterCardProps) =
           {character.name}
         </h3>
         
-        {/* Description */}
+        {/* Genre tendencies */}
         <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-          {character.description}
+          {character.genreTendencies}
         </p>
         
-        {/* Traits */}
-        <div className="flex flex-wrap gap-2">
-          {character.traits.map((trait) => (
+        {/* Sound Identity */}
+        <div className="flex flex-wrap gap-2 mb-4">
+          {character.soundIdentity.map((trait) => (
             <span
               key={trait}
               className="px-2.5 py-1 text-xs rounded-full bg-secondary/80 text-secondary-foreground"
@@ -77,10 +77,15 @@ const CharacterCard = ({ character, onClick, isSelected }: CharacterCardProps) =
         </div>
         
         {/* Energy indicator */}
-        <div className="mt-4 pt-4 border-t border-border/50">
+        <div className="pt-4 border-t border-border/50">
           <span className="text-xs text-muted-foreground">Energy: </span>
           <span className="text-xs font-medium text-foreground">{character.energy}</span>
         </div>
+
+        {/* Taste Philosophy */}
+        <p className="mt-3 text-xs italic text-muted-foreground/80">
+          {character.tastePhilosophy}
+        </p>
       </div>
     </button>
   );

@@ -33,17 +33,20 @@ const Index = () => {
   const handleCustomCharacterComplete = (traits: Record<string, string>) => {
     setCustomTraits(traits);
     // Create a pseudo-character based on traits
+    const colorMapping = traits.energy === 'dominant' ? 'kaiser' : traits.energy === 'chaotic' ? 'gojo' : 'nanami';
     const customCharacter: Character = {
       id: 'custom',
       name: 'Your Character',
       anime: 'Original',
-      color: traits.energy === 'dominant' ? 'kaiser' : traits.energy === 'chaotic' ? 'gojo' : 'nanami',
+      color: colorMapping,
       traits: [traits.energy, traits.mood, traits.vibe, traits.tempo].filter(Boolean),
-      energy: traits.energy === 'dominant' ? 'Commanding & Intense' : 
+      energy: traits.energy === 'dominant' ? 'Commanding & Controlled' : 
               traits.energy === 'chaotic' ? 'Electric & Carefree' :
               traits.energy === 'calm' ? 'Steady & Sophisticated' : 'Focused & Driven',
-      musicVibe: 'Personalized based on your traits',
-      description: 'A character built from your personality.',
+      soundIdentity: [traits.energy, traits.mood, traits.vibe].filter(Boolean),
+      genreTendencies: 'Personalized based on your traits',
+      listeningBehavior: ['Curated to match your personality'],
+      tastePhilosophy: '"Music that reflects who you are."',
     };
     setSelectedCharacter(customCharacter);
     setState('quiz');

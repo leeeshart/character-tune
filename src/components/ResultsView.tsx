@@ -157,7 +157,7 @@ const ResultsView = ({ character, preferences, onBack, onRestart }: ResultsViewP
           {playlistName}
         </h1>
         <p className="text-sm text-muted-foreground mt-3">
-          {character.musicVibe}
+          {character.genreTendencies}
         </p>
       </div>
 
@@ -204,10 +204,16 @@ const ResultsView = ({ character, preferences, onBack, onRestart }: ResultsViewP
         <h3 className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-3">
           Why this works
         </h3>
-        <p className="text-sm text-secondary-foreground leading-relaxed">
-          {character.name}'s <span className="text-foreground font-medium">{character.energy.toLowerCase()}</span> energy 
-          meets your preference for <span className="text-foreground font-medium">{preferences.genre || 'diverse'}</span> sounds, 
-          creating a playlist that channels their personality through your musical language.
+        <ul className="space-y-2 mb-4">
+          {character.listeningBehavior.map((behavior, i) => (
+            <li key={i} className="text-sm text-secondary-foreground flex items-start gap-2">
+              <span className="text-muted-foreground">•</span>
+              {behavior}
+            </li>
+          ))}
+        </ul>
+        <p className="text-xs italic text-muted-foreground/80 border-t border-border/30 pt-3">
+          {character.tastePhilosophy}
         </p>
       </div>
 

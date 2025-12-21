@@ -5,20 +5,28 @@ export interface Character {
   color: 'kaiser' | 'gojo' | 'nanami';
   traits: string[];
   energy: string;
-  musicVibe: string;
-  description: string;
+  soundIdentity: string[];
+  genreTendencies: string;
+  listeningBehavior: string[];
+  tastePhilosophy: string;
 }
 
 export const characters: Character[] = [
   {
     id: 'kaiser',
-    name: 'Kaiser',
+    name: 'Michael Kaiser',
     anime: 'Blue Lock',
     color: 'kaiser',
-    traits: ['Dominant', 'Ambitious', 'Strategic', 'Ruthless'],
-    energy: 'Commanding & Intense',
-    musicVibe: 'Power anthems, orchestral epics, aggressive hip-hop',
-    description: 'The emperor who demands perfection. Music that makes you feel unstoppable.',
+    traits: ['Dominant', 'Theatrical', 'Strategic', 'Intense'],
+    energy: 'Commanding & Controlled',
+    soundIdentity: ['High energy', 'Sharp rhythm', 'Controlled emotional exposure', 'Dominant presence'],
+    genreTendencies: 'Rap / Trap / Dark Pop (adaptive)',
+    listeningBehavior: [
+      'Prefers music that asserts control',
+      'Avoids emotional excess',
+      'Thrives on dramatic tension',
+    ],
+    tastePhilosophy: '"Music is not comfort. It\'s proof that I exist above the noise."',
   },
   {
     id: 'gojo',
@@ -27,8 +35,14 @@ export const characters: Character[] = [
     color: 'gojo',
     traits: ['Playful', 'Chaotic', 'Confident', 'Unpredictable'],
     energy: 'Electric & Carefree',
-    musicVibe: 'High-energy drops, chaotic beats, euphoric vibes',
-    description: 'The strongest who plays by his own rules. Music that hits different.',
+    soundIdentity: ['High energy', 'Unpredictable drops', 'Playful chaos', 'Euphoric peaks'],
+    genreTendencies: 'EDM / Hyperpop / K-Pop / Party anthems',
+    listeningBehavior: [
+      'Skips intros, lives for the drop',
+      'Plays music loud, no shame',
+      'Curates for vibes, not meaning',
+    ],
+    tastePhilosophy: '"If it doesn\'t hit different, why bother?"',
   },
   {
     id: 'nanami',
@@ -37,8 +51,14 @@ export const characters: Character[] = [
     color: 'nanami',
     traits: ['Disciplined', 'Mature', 'Calm', 'Refined'],
     energy: 'Steady & Sophisticated',
-    musicVibe: 'Clean production, jazzy undertones, smooth grooves',
-    description: 'The professional who values quality. Music for focused minds.',
+    soundIdentity: ['Clean production', 'Jazzy undertones', 'Smooth grooves', 'Subtle complexity'],
+    genreTendencies: 'R&B / Neo-Soul / Jazz / Lo-fi',
+    listeningBehavior: [
+      'Values quality over quantity',
+      'Appreciates subtle craftsmanship',
+      'Listens fully, never skips',
+    ],
+    tastePhilosophy: '"Good music respects your time."',
   },
 ];
 
