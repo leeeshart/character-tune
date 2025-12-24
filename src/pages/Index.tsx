@@ -4,9 +4,11 @@ import CharacterCard from '@/components/CharacterCard';
 import TasteQuiz from '@/components/TasteQuiz';
 import CreateCharacterForm from '@/components/CreateCharacterForm';
 import ResultsView from '@/components/ResultsView';
+import SpotifyLoginButton from '@/components/SpotifyLoginButton';
 import { Button } from '@/components/ui/button';
 import MusicVisualizer from '@/components/MusicVisualizer';
 import { Plus, Sparkles } from 'lucide-react';
+import { useSpotifyAuth } from '@/hooks/use-spotify-auth';
 
 type AppState = 'select' | 'quiz' | 'create' | 'results' | 'custom-results';
 
@@ -15,6 +17,7 @@ const Index = () => {
   const [selectedCharacter, setSelectedCharacter] = useState<Character | null>(null);
   const [preferences, setPreferences] = useState<Record<string, string>>({});
   const [customTraits, setCustomTraits] = useState<Record<string, string>>({});
+  const { isAuthenticated } = useSpotifyAuth();
 
   const handleCharacterSelect = (character: Character) => {
     setSelectedCharacter(character);
@@ -92,9 +95,19 @@ const Index = () => {
                 <span className="text-foreground">listen to?</span>
               </h1>
               
-              <p className="text-muted-foreground max-w-md mx-auto text-base md:text-lg">
+              <p className="text-muted-foreground max-w-md mx-auto text-base md:text-lg mb-6">
                 Blend your music taste with the personality of your favorite characters.
               </p>
+
+              {/* Spotify Connection */}
+              <div className="flex justify-center">
+                <SpotifyLoginButton variant="glass" />
+              </div>
+              {isAuthenticated && (
+                <p className="text-xs text-green-500 mt-2">
+                  ✓ Your Spotify is connected - we'll personalize recommendations!
+                </p>
+              )}
             </header>
 
             {/* Character Grid */}

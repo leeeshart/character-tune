@@ -1,8 +1,10 @@
 import { Character } from '@/lib/characters';
 import { Button } from '@/components/ui/button';
 import MusicVisualizer from './MusicVisualizer';
-import { ArrowLeft, Shuffle, ExternalLink } from 'lucide-react';
+import { ArrowLeft, Shuffle, ExternalLink, Music } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useSpotifyAuth } from '@/hooks/use-spotify-auth';
+import { useTopTracks, useRecommendations } from '@/hooks/use-spotify-data';
 
 interface ResultsViewProps {
   character: Character;
@@ -96,8 +98,39 @@ const generateSampleTracks = (character: Character, preferences: Record<string, 
 };
 
 const ResultsView = ({ character, preferences, onBack, onRestart }: ResultsViewProps) => {
+  const { isAuthenticated } = useSpotifyAuth();
+  const { data: topTracksData } = useTopTracks('medium_term', 5);
+  
+  // Get user's top track IDs for seeding recommendations
+  const seedTrackIds = topTracksData?.items?.slice(0, 2).map(t => t.id);
+  
+  // Fetch personalized recommendations from Spotify when authenticated
+  const { data: recommendationsData, isLoading: isLoadingRecs } = useRecommendations(
+    character.id,
+    preferences,
+    seedTrackIds,
+    undefined,
+    isAuthenticated && !!seedTrackIds?.length
+  );
+
   const playlistName = generatePlaylistName(character, preferences);
-  const sampleTracks = generateSampleTracks(character, preferences);
+  const fallbackTracks = generateSampleTracks(character, preferences);
+  
+  // Use Spotify recommendations if available, otherwise fallback to static tracks
+  const displayTracks = isAuthenticated && recommendationsData?.tracks
+    ? recommendationsData.tracks.slice(0, 5).map(track => ({
+        title: track.name,
+        artist: track.artists.map(a => a.name).join(', '),
+        albumArt: track.album.images?.length > 0 
+          ? (track.album.images[2]?.url || track.album.images[0]?.url) 
+          : undefined,
+        spotifyUrl: track.external_urls.spotify,
+      }))
+    : fallbackTracks.map(track => ({
+        ...track,
+        albumArt: undefined,
+        spotifyUrl: undefined,
+      }));
 
   const textGradientClass = {
     kaiser: 'text-gradient-kaiser',
@@ -137,31 +170,57 @@ const ResultsView = ({ character, preferences, onBack, onRestart }: ResultsViewP
       )}
       style={{ animationDelay: '0.2s' }}
       >
-        <h3 className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-4">
-          Sample Tracks
-        </h3>
-        <div className="space-y-4">
-          {sampleTracks.map((track, i) => (
-            <div 
-              key={i} 
-              className="flex items-center gap-4 group cursor-pointer"
-              style={{ animationDelay: `${0.3 + i * 0.1}s` }}
-            >
-              <div className="w-8 h-8 rounded bg-secondary flex items-center justify-center text-sm text-muted-foreground group-hover:text-foreground transition-colors">
-                {i + 1}
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-foreground truncate group-hover:text-primary transition-colors">
-                  {track.title}
-                </p>
-                <p className="text-xs text-muted-foreground truncate">
-                  {track.artist}
-                </p>
-              </div>
-              <ExternalLink className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
-            </div>
-          ))}
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+            {isAuthenticated ? 'Personalized For You' : 'Sample Tracks'}
+          </h3>
+          {isAuthenticated && (
+            <span className="text-xs text-green-500 flex items-center gap-1">
+              <Music className="w-3 h-3" />
+              From Spotify
+            </span>
+          )}
         </div>
+        {isLoadingRecs ? (
+          <div className="flex items-center justify-center py-8">
+            <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+            <span className="ml-3 text-sm text-muted-foreground">Getting recommendations...</span>
+          </div>
+        ) : (
+          <div className="space-y-4">
+            {displayTracks.map((track, i) => (
+              <a 
+                key={i}
+                href={track.spotifyUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-4 group cursor-pointer"
+                style={{ animationDelay: `${0.3 + i * 0.1}s` }}
+              >
+                {track.albumArt ? (
+                  <img 
+                    src={track.albumArt} 
+                    alt={track.title}
+                    className="w-10 h-10 rounded object-cover"
+                  />
+                ) : (
+                  <div className="w-10 h-10 rounded bg-secondary flex items-center justify-center text-sm text-muted-foreground group-hover:text-foreground transition-colors">
+                    {i + 1}
+                  </div>
+                )}
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium text-foreground truncate group-hover:text-primary transition-colors">
+                    {track.title}
+                  </p>
+                  <p className="text-xs text-muted-foreground truncate">
+                    {track.artist}
+                  </p>
+                </div>
+                <ExternalLink className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+              </a>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Match Analysis */}
