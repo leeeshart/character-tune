@@ -16,20 +16,6 @@ const CharacterCard = ({ character, onClick, isSelected }: CharacterCardProps) =
       text: 'text-gradient-kaiser',
       ring: 'ring-kaiser',
     },
-    gojo: {
-      gradient: 'from-gojo/20 to-gojo-glow/10',
-      border: 'border-gojo/30 hover:border-gojo/60',
-      glow: 'hover:shadow-[0_0_40px_-10px_hsl(190_100%_60%/0.5)]',
-      text: 'text-gradient-gojo',
-      ring: 'ring-gojo',
-    },
-    nanami: {
-      gradient: 'from-nanami/20 to-nanami-glow/10',
-      border: 'border-nanami/30 hover:border-nanami/60',
-      glow: 'hover:shadow-[0_0_40px_-10px_hsl(35_80%_55%/0.5)]',
-      text: 'text-gradient-nanami',
-      ring: 'ring-nanami',
-    },
     jaekyung: {
       gradient: 'from-jaekyung/20 to-jaekyung-glow/10',
       border: 'border-jaekyung/30 hover:border-jaekyung/60',

@@ -2,7 +2,7 @@ import { cn } from '@/lib/utils';
 
 interface MusicVisualizerProps {
   className?: string;
-  color?: 'primary' | 'kaiser' | 'gojo' | 'nanami' | 'jaekyung';
+  color?: 'primary' | 'kaiser' | 'jaekyung';
   bars?: number;
 }
 
@@ -10,8 +10,6 @@ const MusicVisualizer = ({ className, color = 'primary', bars = 5 }: MusicVisual
   const colorClasses = {
     primary: 'bg-primary',
     kaiser: 'bg-kaiser',
-    gojo: 'bg-gojo',
-    nanami: 'bg-nanami',
     jaekyung: 'bg-jaekyung',
   };
 

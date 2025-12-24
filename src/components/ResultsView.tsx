@@ -14,8 +14,6 @@ interface ResultsViewProps {
 const generatePlaylistName = (character: Character, preferences: Record<string, string>) => {
   const prefixes: Record<string, string> = {
     kaiser: 'Empire',
-    gojo: 'Infinity',
-    nanami: 'Overtime',
     jaekyung: 'Knockout',
     custom: 'Personal',
   };
@@ -92,66 +90,6 @@ const generateSampleTracks = (character: Character, preferences: Record<string, 
         { title: 'God\'s Menu', artist: 'Stray Kids' },
       ],
     },
-    gojo: {
-      english: [
-        { title: 'Blinding Lights', artist: 'The Weeknd' },
-        { title: 'Levitating', artist: 'Dua Lipa' },
-        { title: 'HUMBLE.', artist: 'Kendrick Lamar' },
-        { title: 'Industry Baby', artist: 'Lil Nas X' },
-        { title: 'Wow.', artist: 'Post Malone' },
-      ],
-      hindi: [
-        { title: 'Kar Gayi Chull', artist: 'Badshah' },
-        { title: 'Swag Se Swagat', artist: 'Vishal Dadlani' },
-        { title: 'Badtameez Dil', artist: 'Benny Dayal' },
-        { title: 'Lungi Dance', artist: 'Yo Yo Honey Singh' },
-        { title: 'Party All Night', artist: 'Yo Yo Honey Singh' },
-      ],
-      korean: [
-        { title: 'Dynamite', artist: 'BTS' },
-        { title: 'How You Like That', artist: 'BLACKPINK' },
-        { title: 'Psycho', artist: 'Red Velvet' },
-        { title: 'Next Level', artist: 'aespa' },
-        { title: 'FEARLESS', artist: 'LE SSERAFIM' },
-      ],
-      mixed: [
-        { title: 'Blinding Lights', artist: 'The Weeknd' },
-        { title: 'Dynamite', artist: 'BTS' },
-        { title: 'Kar Gayi Chull', artist: 'Badshah' },
-        { title: 'HUMBLE.', artist: 'Kendrick Lamar' },
-        { title: 'How You Like That', artist: 'BLACKPINK' },
-      ],
-    },
-    nanami: {
-      english: [
-        { title: 'Redbone', artist: 'Childish Gambino' },
-        { title: 'Best Part', artist: 'Daniel Caesar' },
-        { title: 'Moonlight', artist: 'Frank Ocean' },
-        { title: 'Electric', artist: 'Khalid' },
-        { title: 'Come Through', artist: 'H.E.R.' },
-      ],
-      hindi: [
-        { title: 'Tum Hi Ho', artist: 'Arijit Singh' },
-        { title: 'Agar Tum Saath Ho', artist: 'Arijit Singh' },
-        { title: 'Channa Mereya', artist: 'Arijit Singh' },
-        { title: 'Kabira', artist: 'Tochi Raina' },
-        { title: 'Ilahi', artist: 'Arijit Singh' },
-      ],
-      korean: [
-        { title: 'Spring Day', artist: 'BTS' },
-        { title: 'Love Poem', artist: 'IU' },
-        { title: 'Eyes, Nose, Lips', artist: 'Taeyang' },
-        { title: 'Through the Night', artist: 'IU' },
-        { title: 'Palette', artist: 'IU' },
-      ],
-      mixed: [
-        { title: 'Redbone', artist: 'Childish Gambino' },
-        { title: 'Spring Day', artist: 'BTS' },
-        { title: 'Channa Mereya', artist: 'Arijit Singh' },
-        { title: 'Best Part', artist: 'Daniel Caesar' },
-        { title: 'Love Poem', artist: 'IU' },
-      ],
-    },
   };
 
   return tracks[character.id]?.[preferences.language || 'mixed'] || tracks[character.id]?.mixed || tracks.kaiser.mixed;
@@ -163,15 +101,11 @@ const ResultsView = ({ character, preferences, onBack, onRestart }: ResultsViewP
 
   const textGradientClass = {
     kaiser: 'text-gradient-kaiser',
-    gojo: 'text-gradient-gojo',
-    nanami: 'text-gradient-nanami',
     jaekyung: 'text-gradient-jaekyung',
   }[character.color];
 
   const glowClass = {
     kaiser: 'glow-kaiser',
-    gojo: 'glow-gojo',
-    nanami: 'glow-nanami',
     jaekyung: 'glow-jaekyung',
   }[character.color];
 

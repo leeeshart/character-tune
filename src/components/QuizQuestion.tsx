@@ -5,7 +5,7 @@ interface QuizQuestionProps {
   options: { value: string; label: string }[];
   selectedValue?: string;
   onSelect: (value: string) => void;
-  color?: 'primary' | 'kaiser' | 'gojo' | 'nanami' | 'jaekyung';
+  color?: 'primary' | 'kaiser' | 'jaekyung';
 }
 
 const QuizQuestion = ({ question, options, selectedValue, onSelect, color = 'primary' }: QuizQuestionProps) => {
@@ -17,14 +17,6 @@ const QuizQuestion = ({ question, options, selectedValue, onSelect, color = 'pri
     kaiser: {
       selected: 'border-kaiser bg-kaiser/10',
       hover: 'hover:border-kaiser/50',
-    },
-    gojo: {
-      selected: 'border-gojo bg-gojo/10',
-      hover: 'hover:border-gojo/50',
-    },
-    nanami: {
-      selected: 'border-nanami bg-nanami/10',
-      hover: 'hover:border-nanami/50',
     },
     jaekyung: {
       selected: 'border-jaekyung bg-jaekyung/10',
