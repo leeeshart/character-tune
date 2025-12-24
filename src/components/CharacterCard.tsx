@@ -30,6 +30,13 @@ const CharacterCard = ({ character, onClick, isSelected }: CharacterCardProps) =
       text: 'text-gradient-nanami',
       ring: 'ring-nanami',
     },
+    jaekyung: {
+      gradient: 'from-jaekyung/20 to-jaekyung-glow/10',
+      border: 'border-jaekyung/30 hover:border-jaekyung/60',
+      glow: 'hover:shadow-[0_0_40px_-10px_hsl(0_70%_45%/0.5)]',
+      text: 'text-gradient-jaekyung',
+      ring: 'ring-jaekyung',
+    },
   };
 
   const colors = colorClasses[character.color];
@@ -45,8 +52,21 @@ const CharacterCard = ({ character, onClick, isSelected }: CharacterCardProps) =
         isSelected && `ring-2 ${colors.ring}`
       )}
     >
+      {/* Character Image */}
+      {character.image && (
+        <div className="absolute top-4 right-4 w-16 h-16 rounded-full overflow-hidden border-2 border-border/50 opacity-80 group-hover:opacity-100 transition-opacity duration-300">
+          <img 
+            src={character.image} 
+            alt={character.name}
+            className="w-full h-full object-cover"
+          />
+        </div>
+      )}
+
       {/* Decorative elements */}
-      <div className="absolute top-4 right-4 w-20 h-20 rounded-full bg-gradient-to-br from-foreground/5 to-transparent blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+      {!character.image && (
+        <div className="absolute top-4 right-4 w-20 h-20 rounded-full bg-gradient-to-br from-foreground/5 to-transparent blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+      )}
       
       <div className="relative z-10">
         {/* Anime tag */}
