@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 interface SpotifyUser {
   id: string;
@@ -32,6 +33,8 @@ export function SpotifyAuthProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState<SpotifyUser | null>(null);
   const [tokens, setTokens] = useState<StoredTokens | null>(null);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   // Define refreshTokenInternal first so it can be used in useEffects
   const refreshTokenInternal = useCallback(async (refreshToken: string): Promise<boolean> => {
@@ -91,8 +94,8 @@ export function SpotifyAuthProvider({ children }: { children: ReactNode }) {
 
   // Handle OAuth callback
   useEffect(() => {
-    if (window.location.pathname === '/callback') {
-      const hash = window.location.hash.substring(1);
+    if (location.pathname === '/callback') {
+      const hash = location.hash.substring(1);
       const params = new URLSearchParams(hash);
       
       const accessToken = params.get('access_token');
@@ -109,19 +112,19 @@ export function SpotifyAuthProvider({ children }: { children: ReactNode }) {
         localStorage.setItem(TOKEN_STORAGE_KEY, JSON.stringify(storedTokens));
         setTokens(storedTokens);
         
-        // Clean up URL
-        window.history.replaceState(null, '', '/');
+        // Navigate to home
+        navigate('/', { replace: true });
       }
     }
     
     // Handle errors
-    const params = new URLSearchParams(window.location.search);
-    const error = params.get('error');
+    const searchParams = new URLSearchParams(location.search);
+    const error = searchParams.get('error');
     if (error) {
       console.error('OAuth error:', error);
-      window.history.replaceState(null, '', '/');
+      navigate('/', { replace: true });
     }
-  }, []);
+  }, [location.pathname, location.hash, location.search, navigate]);
 
   // Fetch user profile when tokens are available
   useEffect(() => {

@@ -15,7 +15,7 @@ const authMiddleware = (req: Request, res: ExpressResponse, next: () => void) =>
 };
 
 // Helper to make Spotify API requests
-async function spotifyFetch(endpoint: string, accessToken: string): Promise<globalThis.Response> {
+async function spotifyFetch(endpoint: string, accessToken: string) {
   return fetch(`https://api.spotify.com/v1${endpoint}`, {
     headers: {
       'Authorization': `Bearer ${accessToken}`,

@@ -121,7 +121,9 @@ const ResultsView = ({ character, preferences, onBack, onRestart }: ResultsViewP
     ? recommendationsData.tracks.slice(0, 5).map(track => ({
         title: track.name,
         artist: track.artists.map(a => a.name).join(', '),
-        albumArt: track.album.images[2]?.url || track.album.images[0]?.url,
+        albumArt: track.album.images?.length > 0 
+          ? (track.album.images[2]?.url || track.album.images[0]?.url) 
+          : undefined,
         spotifyUrl: track.external_urls.spotify,
       }))
     : fallbackTracks.map(track => ({
