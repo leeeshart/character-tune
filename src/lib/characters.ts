@@ -1,10 +1,11 @@
 import kaiserImage from '@/assets/characters/kaiser-1.jpeg';
+import jaekyungImage from '@/assets/characters/jaekyung-1.jpeg';
 
 export interface Character {
   id: string;
   name: string;
   anime: string;
-  color: 'kaiser' | 'gojo' | 'nanami' | 'jaekyung';
+  color: 'kaiser' | 'jaekyung';
   traits: string[];
   energy: string;
   soundIdentity: string[];
@@ -47,38 +48,7 @@ export const characters: Character[] = [
       'Music as fuel, not comfort',
     ],
     tastePhilosophy: '"Music doesn\'t calm me. It sharpens me."',
-  },
-  {
-    id: 'gojo',
-    name: 'Gojo Satoru',
-    anime: 'Jujutsu Kaisen',
-    color: 'gojo',
-    traits: ['Playful', 'Chaotic', 'Confident', 'Unpredictable'],
-    energy: 'Electric & Carefree',
-    soundIdentity: ['High energy', 'Unpredictable drops', 'Playful chaos', 'Euphoric peaks'],
-    genreTendencies: 'EDM / Hyperpop / K-Pop / Party anthems',
-    listeningBehavior: [
-      'Skips intros, lives for the drop',
-      'Plays music loud, no shame',
-      'Curates for vibes, not meaning',
-    ],
-    tastePhilosophy: '"If it doesn\'t hit different, why bother?"',
-  },
-  {
-    id: 'nanami',
-    name: 'Nanami Kento',
-    anime: 'Jujutsu Kaisen',
-    color: 'nanami',
-    traits: ['Disciplined', 'Mature', 'Calm', 'Refined'],
-    energy: 'Steady & Sophisticated',
-    soundIdentity: ['Clean production', 'Jazzy undertones', 'Smooth grooves', 'Subtle complexity'],
-    genreTendencies: 'R&B / Neo-Soul / Jazz / Lo-fi',
-    listeningBehavior: [
-      'Values quality over quantity',
-      'Appreciates subtle craftsmanship',
-      'Listens fully, never skips',
-    ],
-    tastePhilosophy: '"Good music respects your time."',
+    image: jaekyungImage,
   },
 ];
 
