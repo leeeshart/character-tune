@@ -4,6 +4,45 @@
 
 **URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
 
+## Spotify Integration
+
+This app can connect to Spotify to provide personalized music recommendations based on your listening history.
+
+### Setting Up Spotify Integration
+
+1. **Create a Spotify App**
+   - Go to [Spotify Developer Dashboard](https://developer.spotify.com/dashboard)
+   - Create a new app
+   - Set the Redirect URI to `http://localhost:3001/api/auth/callback` (for local development)
+   - Copy the Client ID and Client Secret
+
+2. **Configure the Backend**
+   ```sh
+   cd server
+   cp .env.example .env
+   # Edit .env with your Spotify credentials
+   ```
+
+3. **Configure the Frontend** (optional)
+   ```sh
+   cp .env.example .env
+   # Edit .env if your backend is not running on localhost:3001
+   ```
+
+4. **Start the Backend**
+   ```sh
+   cd server
+   npm install
+   npm run dev
+   ```
+
+5. **Start the Frontend** (in a separate terminal)
+   ```sh
+   npm run dev
+   ```
+
+The app will work without Spotify connection, showing sample tracks. When connected, it will show personalized recommendations based on your Spotify listening history.
+
 ## How can I edit this code?
 
 There are several ways of editing your application.
@@ -59,6 +98,8 @@ This project is built with:
 - React
 - shadcn-ui
 - Tailwind CSS
+- Express.js (backend)
+- Spotify Web API
 
 ## How can I deploy this project?
 
