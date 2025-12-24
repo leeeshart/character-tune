@@ -63,6 +63,10 @@ export default {
           DEFAULT: "hsl(var(--nanami))",
           glow: "hsl(var(--nanami-glow))",
         },
+        jaekyung: {
+          DEFAULT: "hsl(var(--jaekyung))",
+          glow: "hsl(var(--jaekyung-glow))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",

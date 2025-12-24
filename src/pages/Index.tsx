@@ -33,7 +33,7 @@ const Index = () => {
   const handleCustomCharacterComplete = (traits: Record<string, string>) => {
     setCustomTraits(traits);
     // Create a pseudo-character based on traits
-    const colorMapping = traits.energy === 'dominant' ? 'kaiser' : traits.energy === 'chaotic' ? 'gojo' : 'nanami';
+    const colorMapping: Character['color'] = traits.energy === 'dominant' ? 'kaiser' : traits.energy === 'chaotic' ? 'gojo' : 'nanami';
     const customCharacter: Character = {
       id: 'custom',
       name: 'Your Character',

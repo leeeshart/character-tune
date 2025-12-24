@@ -16,6 +16,8 @@ const generatePlaylistName = (character: Character, preferences: Record<string, 
     kaiser: 'Empire',
     gojo: 'Infinity',
     nanami: 'Overtime',
+    jaekyung: 'Knockout',
+    custom: 'Personal',
   };
   
   const languageSuffixes: Record<string, string> = {
@@ -25,7 +27,7 @@ const generatePlaylistName = (character: Character, preferences: Record<string, 
     mixed: 'Fusion',
   };
   
-  return `${prefixes[character.id]} ${languageSuffixes[preferences.language || 'mixed']} Mix`;
+  return `${prefixes[character.id] || 'Custom'} ${languageSuffixes[preferences.language || 'mixed']} Mix`;
 };
 
 const generateSampleTracks = (character: Character, preferences: Record<string, string>) => {
@@ -58,6 +60,36 @@ const generateSampleTracks = (character: Character, preferences: Record<string, 
         { title: 'God\'s Menu', artist: 'Stray Kids' },
         { title: 'DNA.', artist: 'Kendrick Lamar' },
         { title: 'Apna Time Aayega', artist: 'Ranveer Singh' },
+      ],
+    },
+    jaekyung: {
+      english: [
+        { title: 'Lose Yourself', artist: 'Eminem' },
+        { title: 'Till I Collapse', artist: 'Eminem' },
+        { title: 'Can\'t Be Touched', artist: 'Roy Jones Jr.' },
+        { title: 'Remember The Name', artist: 'Fort Minor' },
+        { title: 'Warrior', artist: 'Disturbed' },
+      ],
+      hindi: [
+        { title: 'Dangal', artist: 'Daler Mehndi' },
+        { title: 'Chak De India', artist: 'Sukhwinder Singh' },
+        { title: 'Sultan', artist: 'Sukhwinder Singh' },
+        { title: 'Ziddi Dil', artist: 'Vishal Dadlani' },
+        { title: 'Kar Har Maidaan Fateh', artist: 'Sukhwinder Singh' },
+      ],
+      korean: [
+        { title: 'MANIAC', artist: 'Stray Kids' },
+        { title: 'Hard to Love', artist: 'BLACKPINK' },
+        { title: 'VILLAIN', artist: 'K/DA' },
+        { title: 'Given-Taken', artist: 'ENHYPEN' },
+        { title: 'O.O', artist: 'NMIXX' },
+      ],
+      mixed: [
+        { title: 'Lose Yourself', artist: 'Eminem' },
+        { title: 'MANIAC', artist: 'Stray Kids' },
+        { title: 'Dangal', artist: 'Daler Mehndi' },
+        { title: 'Till I Collapse', artist: 'Eminem' },
+        { title: 'God\'s Menu', artist: 'Stray Kids' },
       ],
     },
     gojo: {
@@ -122,7 +154,7 @@ const generateSampleTracks = (character: Character, preferences: Record<string, 
     },
   };
 
-  return tracks[character.id]?.[preferences.language || 'mixed'] || tracks[character.id]?.mixed || [];
+  return tracks[character.id]?.[preferences.language || 'mixed'] || tracks[character.id]?.mixed || tracks.kaiser.mixed;
 };
 
 const ResultsView = ({ character, preferences, onBack, onRestart }: ResultsViewProps) => {
@@ -133,12 +165,14 @@ const ResultsView = ({ character, preferences, onBack, onRestart }: ResultsViewP
     kaiser: 'text-gradient-kaiser',
     gojo: 'text-gradient-gojo',
     nanami: 'text-gradient-nanami',
+    jaekyung: 'text-gradient-jaekyung',
   }[character.color];
 
   const glowClass = {
     kaiser: 'glow-kaiser',
     gojo: 'glow-gojo',
     nanami: 'glow-nanami',
+    jaekyung: 'glow-jaekyung',
   }[character.color];
 
   return (
