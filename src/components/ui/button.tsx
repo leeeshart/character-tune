@@ -15,8 +15,7 @@ const buttonVariants = cva(
         secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-secondary hover:text-foreground",
         link: "text-primary underline-offset-4 hover:underline",
-        kaiser: "bg-kaiser text-primary-foreground hover:bg-kaiser/90 shadow-[0_0_40px_-10px_hsl(var(--kaiser)/0.5)]",
-        jaekyung: "bg-jaekyung text-primary-foreground hover:bg-jaekyung/90 shadow-[0_0_40px_-10px_hsl(var(--jaekyung)/0.5)]",
+        jaekyung: "bg-jaekyung text-foreground hover:bg-jaekyung/90 shadow-[0_0_40px_-10px_hsl(var(--jaekyung)/0.5)]",
         glass: "bg-secondary/50 backdrop-blur-sm border border-border/50 hover:bg-secondary/70 hover:border-primary/30",
       },
       size: {

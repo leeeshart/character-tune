@@ -1,172 +1,125 @@
 import { useState } from 'react';
 import { characters, Character, getCharacterById } from '@/lib/characters';
-import CharacterCard from '@/components/CharacterCard';
-import TasteQuiz from '@/components/TasteQuiz';
-import CreateCharacterForm from '@/components/CreateCharacterForm';
-import ResultsView from '@/components/ResultsView';
-import { Button } from '@/components/ui/button';
-import MusicVisualizer from '@/components/MusicVisualizer';
-import { Plus, Sparkles } from 'lucide-react';
+import VerticalCharacterCard from '@/components/VerticalCharacterCard';
+import CreateCard from '@/components/CreateCard';
+import VideoIntro from '@/components/VideoIntro';
+import CharacterProfile from '@/components/CharacterProfile';
+import CreateCharacterFlow from '@/components/CreateCharacterFlow';
 
-type AppState = 'select' | 'quiz' | 'create' | 'results' | 'custom-results';
+type AppState = 'home' | 'video-intro' | 'profile' | 'create';
 
 const Index = () => {
-  const [state, setState] = useState<AppState>('select');
+  const [state, setState] = useState<AppState>('home');
   const [selectedCharacter, setSelectedCharacter] = useState<Character | null>(null);
-  const [preferences, setPreferences] = useState<Record<string, string>>({});
-  const [customTraits, setCustomTraits] = useState<Record<string, string>>({});
 
   const handleCharacterSelect = (character: Character) => {
     setSelectedCharacter(character);
-    setState('quiz');
+    setState('video-intro');
   };
 
-  const handleQuizComplete = (prefs: Record<string, string>) => {
-    setPreferences(prefs);
-    setState('results');
+  const handleVideoComplete = () => {
+    setState('profile');
   };
 
-  const handleCreateCharacter = () => {
+  const handleVideoSkip = () => {
+    setState('profile');
+  };
+
+  const handleCreateClick = () => {
     setState('create');
   };
 
-  const handleCustomCharacterComplete = (traits: Record<string, string>) => {
-    setCustomTraits(traits);
-    // Create a pseudo-character based on traits
-    const colorMapping: Character['color'] = traits.energy === 'dominant' ? 'kaiser' : 'jaekyung';
-    const customCharacter: Character = {
-      id: 'custom',
-      name: 'Your Character',
-      anime: 'Original',
-      color: colorMapping,
-      traits: [traits.energy, traits.mood, traits.vibe, traits.tempo].filter(Boolean),
-      energy: traits.energy === 'dominant' ? 'Commanding & Controlled' : 
-              traits.energy === 'chaotic' ? 'Electric & Carefree' :
-              traits.energy === 'calm' ? 'Steady & Sophisticated' : 'Focused & Driven',
-      soundIdentity: [traits.energy, traits.mood, traits.vibe].filter(Boolean),
-      genreTendencies: 'Personalized based on your traits',
-      listeningBehavior: ['Curated to match your personality'],
-      tastePhilosophy: '"Music that reflects who you are."',
-    };
-    setSelectedCharacter(customCharacter);
-    setState('quiz');
-  };
-
-  const handleRestart = () => {
-    setState('select');
-    setSelectedCharacter(null);
-    setPreferences({});
-    setCustomTraits({});
-  };
-
   const handleBack = () => {
-    if (state === 'quiz' || state === 'create') {
-      setState('select');
-      setSelectedCharacter(null);
-    } else if (state === 'results') {
-      setState('quiz');
-    }
+    setState('home');
+    setSelectedCharacter(null);
   };
 
+  const handleCreateComplete = (customCharacter: Character) => {
+    setSelectedCharacter(customCharacter);
+    setState('profile');
+  };
+
+  // Video intro overlay
+  if (state === 'video-intro' && selectedCharacter) {
+    return (
+      <VideoIntro
+        character={selectedCharacter}
+        onComplete={handleVideoComplete}
+        onSkip={handleVideoSkip}
+      />
+    );
+  }
+
+  // Character profile page
+  if (state === 'profile' && selectedCharacter) {
+    return <CharacterProfile character={selectedCharacter} onBack={handleBack} />;
+  }
+
+  // Create character flow
+  if (state === 'create') {
+    return (
+      <CreateCharacterFlow
+        onComplete={handleCreateComplete}
+        onBack={handleBack}
+      />
+    );
+  }
+
+  // Home screen
   return (
     <main className="min-h-screen">
       {/* Background decoration */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-gojo/5 rounded-full blur-3xl" />
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-jaekyung/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
       </div>
 
       <div className="relative z-10 container max-w-4xl mx-auto px-4 py-12 md:py-20">
-        {state === 'select' && (
-          <div className="animate-fade-in">
-            {/* Hero */}
-            <header className="text-center mb-16">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/50 border border-border/50 mb-6">
-                <MusicVisualizer bars={3} className="h-4" />
-                <span className="text-xs font-medium text-muted-foreground">Character × Music</span>
+        <div className="animate-fade-in">
+          {/* Minimal header */}
+          <header className="text-center mb-12">
+            <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-3">
+              CharacterTune
+            </h1>
+            <p className="text-muted-foreground text-sm md:text-base max-w-md mx-auto">
+              Blend fictional character personalities with music taste.
+            </p>
+          </header>
+
+          {/* Character cards grid */}
+          <section className="grid grid-cols-2 md:grid-cols-2 gap-4 md:gap-6 max-w-2xl mx-auto">
+            {/* Character cards */}
+            {characters.map((character, i) => (
+              <div
+                key={character.id}
+                className="animate-fade-in"
+                style={{ animationDelay: `${i * 0.1}s` }}
+              >
+                <VerticalCharacterCard
+                  character={character}
+                  onClick={() => handleCharacterSelect(character)}
+                />
               </div>
-              
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
-                <span className="text-gradient">What would they</span>
-                <br />
-                <span className="text-foreground">listen to?</span>
-              </h1>
-              
-              <p className="text-muted-foreground max-w-md mx-auto text-base md:text-lg">
-                Blend your music taste with the personality of your favorite characters.
-              </p>
-            </header>
+            ))}
 
-            {/* Character Grid */}
-            <section className="mb-12">
-              <h2 className="sr-only">Select a Character</h2>
-              <div className="grid gap-4 md:grid-cols-3">
-                {characters.map((character, i) => (
-                  <div 
-                    key={character.id} 
-                    className="animate-slide-up"
-                    style={{ animationDelay: `${i * 0.1}s` }}
-                  >
-                    <CharacterCard
-                      character={character}
-                      onClick={() => handleCharacterSelect(character)}
-                    />
-                  </div>
-                ))}
-              </div>
-            </section>
-
-            {/* Create Custom */}
-            <section className="text-center animate-slide-up" style={{ animationDelay: '0.4s' }}>
-              <div className="inline-block">
-                <Button 
-                  variant="glass" 
-                  size="lg" 
-                  onClick={handleCreateCharacter}
-                  className="group"
-                >
-                  <Plus className="w-4 h-4 mr-2 group-hover:rotate-90 transition-transform duration-300" />
-                  Create Your Own
-                  <Sparkles className="w-4 h-4 ml-2 opacity-50" />
-                </Button>
-              </div>
-              <p className="text-xs text-muted-foreground mt-3">
-                Build a character from personality traits
-              </p>
-            </section>
-          </div>
-        )}
-
-        {state === 'quiz' && selectedCharacter && (
-          <TasteQuiz
-            character={selectedCharacter}
-            onComplete={handleQuizComplete}
-            onBack={handleBack}
-          />
-        )}
-
-        {state === 'create' && (
-          <CreateCharacterForm
-            onComplete={handleCustomCharacterComplete}
-            onBack={handleBack}
-          />
-        )}
-
-        {state === 'results' && selectedCharacter && (
-          <ResultsView
-            character={selectedCharacter}
-            preferences={preferences}
-            onBack={handleBack}
-            onRestart={handleRestart}
-          />
-        )}
+            {/* Create your own card */}
+            <div
+              className="animate-fade-in"
+              style={{ animationDelay: `${characters.length * 0.1}s` }}
+            >
+              <CreateCard onClick={handleCreateClick} />
+            </div>
+          </section>
+        </div>
       </div>
 
       {/* Footer */}
       <footer className="relative z-10 border-t border-border/50 mt-20">
         <div className="container max-w-4xl mx-auto px-4 py-6">
-          <p className="text-center text-xs text-muted-foreground">
-            A music personality experiment. Not affiliated with any anime or streaming service.
+          <p className="text-center text-xs text-muted-foreground leading-relaxed">
+            This is a fan-made, non-commercial demo project.
+            <br />
+            Characters belong to their respective creators. No copyright infringement intended.
           </p>
         </div>
       </footer>
