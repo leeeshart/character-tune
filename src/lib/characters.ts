@@ -1,5 +1,6 @@
 import jaekyungImage from '@/assets/characters/jaekyung-1.jpeg';
-import jaekyungImage2 from '@/assets/characters/jaekyung-2.jpeg';
+import jaekyungCover from '@/assets/characters/jaekyung-cover.jpeg';
+import jaekyungIntroVideo from '@/assets/characters/jaekyung-intro.mp4';
 
 export interface Character {
   id: string;
@@ -15,7 +16,8 @@ export interface Character {
   listeningBehavior: string[];
   tastePhilosophy: string;
   image: string;
-  image2?: string;
+  coverImage?: string;
+  introVideo?: string;
   accentColor: string;
 }
 
@@ -52,7 +54,8 @@ export const characters: Character[] = [
     ],
     tastePhilosophy: '"Music doesn\'t calm me. It sharpens me."',
     image: jaekyungImage,
-    image2: jaekyungImage2,
+    coverImage: jaekyungCover,
+    introVideo: jaekyungIntroVideo,
     accentColor: 'steel-grey',
   },
 ];

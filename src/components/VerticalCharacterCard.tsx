@@ -7,6 +7,9 @@ interface VerticalCharacterCardProps {
 }
 
 const VerticalCharacterCard = ({ character, onClick }: VerticalCharacterCardProps) => {
+  // Use cover image if available, otherwise fall back to main image
+  const displayImage = character.coverImage || character.image;
+
   return (
     <button
       onClick={onClick}
@@ -19,7 +22,7 @@ const VerticalCharacterCard = ({ character, onClick }: VerticalCharacterCardProp
     >
       {/* Image */}
       <img
-        src={character.image}
+        src={displayImage}
         alt={character.name}
         className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
       />
