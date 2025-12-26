@@ -82,22 +82,6 @@ export const characterPlaylists: Record<string, Playlist[]> = {
         { title: 'Thunderous', artist: 'Stray Kids', mood: 'Pressure' },
       ],
     },
-    {
-      id: 'blend-jaekyung',
-      title: 'You × Joo Jaekyung',
-      description: 'A blend of your music taste and his personality.',
-      moodTags: ['Intensity', 'Personal', 'Fusion'],
-      tracks: [
-        { title: 'DNA.', artist: 'Kendrick Lamar', mood: 'Intensity' },
-        { title: 'Sicko Mode', artist: 'Travis Scott', mood: 'Personal' },
-        { title: "God's Menu", artist: 'Stray Kids', mood: 'Fusion' },
-        { title: 'Venom', artist: 'Eminem', mood: 'Intensity' },
-        { title: 'VILLAIN', artist: 'K/DA', mood: 'Fusion' },
-        { title: 'Power', artist: 'Kanye West', mood: 'Personal' },
-        { title: 'Stronger', artist: 'Kanye West', mood: 'Intensity' },
-        { title: 'Godzilla', artist: 'Eminem ft. Juice WRLD', mood: 'Personal' },
-      ],
-    },
   ],
 };
 
